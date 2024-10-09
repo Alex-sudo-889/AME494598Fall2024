@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Hoffman - Resume | Masters in Robotics: Systems Engineering</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #ffffff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-top: 40px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            margin-bottom: 40px;
+        }
+
+        .contact-info p {
+            margin: 5px 0;
+        }
+
+        .skills, .personal-qualities {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .skills li, .personal-qualities li {
+            width: 48%;
+            margin-bottom: 10px;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .skills li:nth-child(odd), .personal-qualities li:nth-child(odd) {
+            margin-right: 4%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #333;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alex Hoffman</h1>
+        <div class="contact-info">
+            <p><a href="mailto:amhoffm7@asu.edu" style="color: #e0e0e0; text-decoration: none;">amhoffm7@asu.edu</a></p>
+        </div>
+
+        <h2>Summary</h2>
+        <p>Dedicated and hardworking individual with diverse experience in road construction, entrepreneurship, robotics, and academic excellence. Proficient in Python, C++, and MATLAB. Seeking to leverage skills in leadership, problem-solving, and technical expertise in a challenging environment.</p>
+
+        <h2>Education</h2>
+        <table>
+            <tr>
+                <th>Degree</th>
+                <th>Institution</th>
+                <th>Year</th>
+            </tr>
+            <tr>
+                <td>Masters in Robotics: Systems Engineering (Ongoing)</td>
+                <td>Arizona State University</td>
+                <td>In Progress</td>
+            </tr>
+            <tr>
+                <td>Bachelor of Arts in History</td>
+                <td>Arizona State University</td>
+                <td>2024</td>
+            </tr>
+            <tr>
+                <td>Bachelor of Arts in Civic, Economic Thought, and Leadership (SCETL)</td>
+                <td>Arizona State University</td>
+                <td>2024</td>
+            </tr>
+        </table>
+        <p><strong>GPA:</strong> 3.67</p>
+
+        <h2>Experience</h2>
+        <h3>Small Business Owner</h3>
+        <p><em>GPU Hosting Services</em><br>Tempe, Arizona — <strong>October 2022 to Present</strong></p>
+        <ul>
+            <li>Founded and manage a GPU hosting business, providing rental services to clients. Learn more about our services at <a href="https://vast.ai" style="color: #e0e0e0; text-decoration: none;">Vast.ai</a>.</li>
+            <li>Develop technical skills and troubleshooting capabilities to maintain and optimize server performance.</li>
+            <li>Demonstrate entrepreneurial spirit by identifying market needs and implementing effective business strategies.</li>
+            <li>Excel in customer service and client relationship management.</li>
+        </ul>
+
+        <h3>Junior Foreman</h3>
+        <p><em>Hoffman Construction</em><br>Jackson, Wisconsin — <strong>Summer 2024</strong></p>
+        <ul>
+            <li>Assisted in overseeing construction projects, managing personnel, and coordinating tasks.</li>
+            <li>Gained extensive knowledge of GPS technology and utilities management.</li>
+            <li>Enhanced leadership skills by supervising teams and ensuring project deadlines were met.</li>
+            <li>Demonstrated ability to manage resources efficiently in a fast-paced environment.</li>
+        </ul>
+
+        <h3>Heavy Interstate Laborer</h3>
+        <p><em>Hoffman Construction</em><br>Milwaukee, Wisconsin — <strong>Summer 2023</strong></p>
+        <ul>
+            <li>Worked in a challenging environment, managing long hours and physically strenuous tasks.</li>
+            <li>Gained practical experience in construction management, site operations, and teamwork.</li>
+            <li>Demonstrated strong work ethic and ability to adapt to dynamic work conditions.</li>
+        </ul>
+
+        <h2>Skills</h2>
+        <ul class="skills">
+            <li><strong>Programming Languages:</strong> Python, C++, MATLAB</li>
+            <li>Robotics Knowledge</li>
+            <li>Leadership and Team Management</li>
+            <li>Technical Troubleshooting and IT Skills</li>
+            <li>Intermediate proficiency in Excel and MySQL</li>
+            <li>Strong Communication and Interpersonal Abilities</li>
+            <li>Problem-Solving and Analytical Thinking</li>
+            <li>Entrepreneurial Mindset and Self-Starter Attitude</li>
+        </ul>
+
+        <h2>Personal Qualities</h2>
+        <ul class="personal-qualities">
+            <li>Hardworking, Smart, and Ambitious</li>
+            <li>Ability to Overcome Challenges and Adapt to New Situations</li>
+            <li>Committed to Continuous Learning and Professional Development</li>
+        </ul>
+
+        <h2>Work Image</h2>
+        <p>Me working on the road this last summer:</p>
+        <img src="Work_Pic.jpg" alt="Working on the road in Summer 2024">
+    </div>
+</body>
+</html>
