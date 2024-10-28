@@ -1,0 +1,10 @@
+sudo apt update;
+sudo apt-get install -y gnupg curl;
+git clone https://github.com/tejaswigowda/ame494598Fall2024.git;
+curl -s https://gist.githubusercontent.com/tejaswigowda/2e65197acb0d5ed9776737c524824f1e/raw/f9bcb296e3e8638a85f6be9ada07a8d69eafe3a3/installNodeMongoUbuntu24.04.sh | bash;
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor;
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list;
+sudo apt update;
+sudo apt-get install -y mongodb-org=8.0.0;
+sudo apt install -y nodejs npm;
+sudo npm install -g forever http-server n
