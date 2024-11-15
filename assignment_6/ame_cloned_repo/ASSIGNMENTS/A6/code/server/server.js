@@ -17,90 +17,83 @@ app.get("/", function (req, res) {
 });
 
 app.get("/getAverage", function (req, res) {
-    var from = parseInt(req.query.from);
-    var to = parseInt(req.query.to);
-    db.collection("dataWeather").find({ time: { $gt: from, $lt: to } }).toArray(function (err, result) {
-        console.log(err);
-        console.log(result);
-        var tempSum = 0;
-        var humSum = 0;
-        for (var i = 0; i < result.length; i++) {
-            tempSum += result[i].t || 0;
-            humSum += result[i].h || 0;
-        }
-        var tAvg = tempSum / result.length;
-        var hAvg = humSum / result.length;
-        res.send(tAvg + " " + hAvg);
-    });
+  var from = parseInt(req.query.from);
+  var to = parseInt(req.query.to);
+  db.collection("dataWeather").find({time:{$gt:from, $lt:to}}).toArray(function(err, result){
+  	console.log(err);
+  	console.log(result);
+  	var tempSum = 0;
+  	var humSum = 0;
+  	for(var i=0; i< result.length; i++){
+  		tempSum += result[i].t || 0;
+  		humSum += result[i].t || 0;
+  	}
+  	var tAvg = tempSum/result.length;
+  	var hAvg = humSum/result.length;
+  	res.send(tAvg + " "+  hAvg);
+  });
 });
 
 app.get("/getLatest", function (req, res) {
-    (async function () {
-        let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
-        let db = client.db('sensorData');
-        try {
-            let result = await db.collection("data").find().sort({ time: -1 }).limit(10).toArray();
-            res.send(JSON.stringify(result));
-        }
-        finally {
-            client.close();
-        }
-    })().catch(err => console.error(err));
+  (async function() {
+    let client = await MongoClient.connect(connectionString,
+      { useNewUrlParser: true });
+    let db = client.db('sensorData');
+    try {
+      let result = await db.collection("data").find().sort({time:-1}).limit(10).toArray();
+      res.send(JSON.stringify(result));
+    }
+    finally {
+      client.close();
+    }
+  })().catch(err => console.error(err));
 });
 
-// Updated /getData route
 app.get("/getData", function (req, res) {
-    var interval = parseInt(req.query.interval); // Interval in minutes
+  var from = parseInt(req.query.from);
+  var to = parseInt(req.query.to);
 
-    if (!interval) {
-        interval = 10; // Default to 10 minutes if not specified
+  (async function() {
+    let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
+    let db = client.db('sensorData');
+    try {
+      let result = await db.collection("data").find({ time: { $gte: from, $lte: to } }).sort({ time: 1 }).toArray();
+      res.send(JSON.stringify(result));
+    } finally {
+      client.close();
     }
-
-    var now = new Date().getTime();
-    var from = now - interval * 60 * 1000; // Calculate 'from' time
-    var to = now; // 'to' time is current time
-
-    (async function () {
-        let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
-        let db = client.db('sensorData');
-        try {
-            let result = await db.collection("data").find({ time: { $gte: from, $lte: to } }).sort({ time: -1 }).toArray();
-            res.send(JSON.stringify(result));
-        }
-        finally {
-            client.close();
-        }
-    })().catch(err => console.error(err));
+  })().catch(err => console.error(err));
 });
 
 app.get("/getValue", function (req, res) {
-    res.send(VALUEt.toString() + " " + VALUEh + " " + VALUEtime + "\r");
+  res.send(VALUEt.toString() + " " + VALUEh + " " + VALUEtime + "\r");
 });
 
 app.get("/setValue", function (req, res) {
-    VALUEt = parseFloat(req.query.t);
-    VALUEh = parseFloat(req.query.h);
-    VALUEtime = new Date().getTime();
-    var dataObj = {
-        t: VALUEt,
-        h: VALUEh,
-        time: VALUEtime
+  VALUEt = parseFloat(req.query.t);
+  VALUEh = parseFloat(req.query.h);
+  VALUEtime = new Date().getTime();
+	var dataObj = {
+		t: VALUEt,
+		h: VALUEh,
+		time: VALUEtime
+	};
+  res.send(VALUEtime.toString());
+  (async function() {
+    let client = await MongoClient.connect(connectionString,
+      { useNewUrlParser: true });
+    let db = client.db('sensorData');
+    try {
+      let result = await db.collection("data").insertOne(dataObj);
+      if(result.insertedId) {
+        result = result.insertedId.toString();
+        console.log(result);
+      }
     }
-    res.send(VALUEtime.toString());
-    (async function () {
-        let client = await MongoClient.connect(connectionString, { useNewUrlParser: true });
-        let db = client.db('sensorData');
-        try {
-            result = await db.collection("data").insertOne(dataObj);
-            if (result.insertedId) {
-                result = result.insertedId.toString();
-                console.log(result);
-            }
-        }
-        finally {
-            client.close();
-        }
-    })().catch(err => console.error(err));
+    finally {
+      client.close();
+    }
+  })().catch(err => console.error(err));
 });
 
 app.use(methodOverride());
