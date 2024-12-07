@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Robot Control Interface</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+        }
+        img {
+            border: 2px solid #ffffff;
+            margin-top: 20px;
+            width: 800px;
+            max-width: 100%;
+            height: auto;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body onkeydown="keyDownHandler(event)" onkeyup="keyUpHandler(event)">
+    <div class="container">
+        <h1>Robot Control Interface</h1>
+        <img src="{{ url_for('video_feed') }}" alt="Video Feed">
+
+        <div class="instructions">
+            <p>Use the arrow keys on your keyboard to control the robot:</p>
+            <ul style="list-style-type: none; padding: 0;">
+                <li><strong>Up Arrow:</strong> Forward</li>
+                <li><strong>Down Arrow:</strong> Backward</li>
+                <li><strong>Left Arrow:</strong> Turn Left</li>
+                <li><strong>Right Arrow:</strong> Turn Right</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let keyState = {};
+
+        function sendCommand(command) {
+            fetch('/control', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'command=' + command
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Failed to send command:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function keyDownHandler(event) {
+            if (keyState[event.keyCode]) return; // Prevent repeated commands on key hold
+            keyState[event.keyCode] = true;
+
+            switch(event.keyCode) {
+                case 37: // Left arrow
+                    sendCommand('left');
+                    break;
+                case 38: // Up arrow
+                    sendCommand('forward');
+                    break;
+                case 39: // Right arrow
+                    sendCommand('right');
+                    break;
+                case 40: // Down arrow
+                    sendCommand('backward');
+                    break;
+            }
+        }
+
+        function keyUpHandler(event) {
+            keyState[event.keyCode] = false;
+            sendCommand('stop');
+        }
+
+        // Prevent default behavior for arrow keys to avoid scrolling the page
+        window.addEventListener('keydown', function(event) {
+            if([37, 38, 39, 40].indexOf(event.keyCode) > -1) {
+                event.preventDefault();
+            }
+        }, false);
+    </script>
+</body>
+</html>
