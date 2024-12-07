@@ -1,0 +1,112 @@
+Raspberry Pi Robot Control with Facial Recognition
+
+Summary
+
+This project combines motor control, video streaming, and facial recognition using a Raspberry Pi. A Flask web server allows users to control the robot's movements through keyboard arrow keys, providing real-time video feedback and facial recognition of known individuals. The system operates without requiring sudo, ensuring secure and efficient GPIO access. The user interface features a dark monochrome theme for a clean and intuitive experience.
+
+Statement of Need
+
+Robotic systems often require intuitive and accessible control methods. Traditional interfaces like manual switches or complex software can be limiting for users without technical expertise. This project addresses the need for a user-friendly, web-based control system that enables real time interaction with a robot. This robot could be used to autonomously or remotely monitor areas for security purposes. 
+
+Installation Instructions
+
+Prerequisites
+
+- Raspberry Pi with Raspbian OS installed
+- L298N Motor Driver connected to the Raspberry Pi and DC Motors
+- Raspberry Pi Camera Module connected and enabled
+- Internet connection for downloading packages
+
+Step 1: Clone the Repository
+
+git clone https://github.com/Alex-sudo-889/AME494598Fall2024/assignment8.git
+cd robot_control
+
+Step 2: Set Up Virtual Environment (Optional)
+
+python3 -m venv venv
+source venv/bin/activate
+
+Step 3: Install Required Packages
+
+pip3 install -r requirements.txt
+
+If you encounter issues with face_recognition, install additional dependencies:
+
+sudo apt-get update
+sudo apt-get install build-essential cmake libgtk-3-dev libboost-all-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl git
+pip3 install dlib
+pip3 install face_recognition
+
+Step 4: Configure GPIO Permissions
+
+1. Create the gpio group:
+
+sudo groupadd gpio
+
+2. Add your user to the gpio group:
+
+sudo usermod -aG gpio $USER
+
+3. Create udev rules:
+
+sudo nano /etc/udev/rules.d/99-gpio.rules
+
+Add the following line:
+
+SUBSYSTEM=="gpio*", PROGRAM="/bin/sh -c 'chown -R root:gpio /sys/class/gpio && chmod -R 770 /sys/class/gpio'"
+
+4. Reload udev rules and reboot:
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+sudo reboot
+
+Step 5: Prepare Known Faces
+
+Navigate to the known_faces directory:
+
+cd known_faces
+
+Add images of known individuals, naming each image with the person's name (e.g., alice.jpg, bob.png).
+
+Usage Instructions
+
+Navigate to the project directory and run the Flask application:
+
+cd ~/robot_control
+python3 app.py
+
+Open a web browser on the Raspberry Pi or another device on the same network and go to:
+
+http://<raspberry_pi_ip>:5000
+
+Replace <raspberry_pi_ip> with the actual IP address of your Raspberry Pi.
+
+Use the keyboard arrow keys to control the robot:
+- Up Arrow: Move Forward
+- Down Arrow: Move Backward
+- Left Arrow: Turn Left
+- Right Arrow: Turn Right
+- Release any arrow key to stop immediately
+
+Demos
+
+Real-Time Motor Control
+Press the arrow keys to move the robot forward, backward, left, or right. The robot responds instantly to your inputs and stops as soon as you release the keys.
+
+Live Video Streaming with Facial Recognition
+The web interface displays a live video feed from the Raspberry Pi's camera. Known individuals are recognized and labeled in real-time, enhancing personalized interactions.
+
+Immediate Stop Functionality
+Releasing any arrow key sends a stop command to the robot, ensuring safe and precise movements without delay.
+
+User-Friendly Interface
+The dark monochrome theme provides a clean and modern look, making the control interface intuitive and visually appealing.
+
+Additional Information
+
+- Ensure all hardware connections are secure before powering on the Raspberry Pi.
+- Verify that the GPIO pin numbers in motor_control.py match your hardware setup.
+- Monitor the terminal running app.py for logs and troubleshooting information.
+
